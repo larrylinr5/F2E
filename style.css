@@ -1,0 +1,167 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* ============================================================ */
+
+
+/* 版面置中 */
+.container{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+}
+
+/* 垂直置中 */
+.verticallyCentered{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+} 
+/* ============================================================ */
+
+/* 標題區CSS */
+.header{
+    display: flex;
+    width: 1280px;
+    height: 104px;
+    justify-content: space-between;
+}
+
+.headerRight,.headerLeft{
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-end;
+    padding-bottom: 18px;
+}
+
+.headerLeft{
+    padding-left: 108px;
+}
+
+.headerRight{
+    padding-right: 108px;
+}
+
+.headerRightView{
+    color: #FF1D6C;
+    margin-right: 27px;
+}
+
+.headerRightStay{
+    color: #FFB72C;
+    margin-right: 27px;
+}
+
+.headerRightTraffic{
+    color: #007350;
+}
+/* ============================================================ */
+
+
+/* 查詢區塊CSS */
+.queryArea{
+    background-image:url('image/32894262535_4991e6cc8e_k 1.png');
+    width: 1226px;
+    height: 491px;
+    margin-top: 23px;
+    margin-bottom: 22px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.queryAreaRow{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+}
+
+.queryAreaRowDetail{
+    display: flex;
+    width: 491px;
+    justify-content: space-between;
+}
+
+.queryAreaRowDetail div input{
+    width: 437px;
+    height: 34px;
+    color: #D2D2D2;
+    border-radius: 6px;
+}
+
+.queryAreaRowDetail div select{
+    width: 219px;
+    height: 40px;
+    border-radius: 6px;
+}
+/* ============================================================ */
+
+
+/* 熱門景點CSS */
+.hotCityVertically{
+    background-repeat:no-repeat;
+    text-decoration: none;
+    width: 177px;
+    height: 217px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.hotCityText{
+    margin-top: 8px;
+    font-size: 20px;
+    color: white;
+}
+
+.hotCityHorizontal{
+    background-repeat:no-repeat;
+    text-decoration: none;
+    width: 185px;
+    height: 106px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
