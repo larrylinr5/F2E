@@ -114,46 +114,50 @@ function ChooseHotCity(bool) {
     /** innerHTML變更用字串 */
     let ResaultString = ''
     /** 決定字串組成的區域方法 */
-    const determine = (item, index) => {
-        if ([0, 3, 6].includes(index)) {
-            ResaultString += `
-            <a href="#" class="container hotCityVertically" style="background-image:url(${item.bgImage})">
+    const determine = (Array)=>{
+        let index = 0;
+        Array.forEach(item => {
+            if ([0, 3, 6].includes(index)) {
+                ResaultString += `
+                <a href="#" class="container hotCityVertically" style="background-image:url(${item.bgImage})">
+                    <div class="verticallyCentered">
+                        <div class="container">
+                            <img src="image/LocationImg.png" alt="">
+                        </div>
+                        <div class="hotCityText">${item.city}</div>
+                    </div>
+                </a>`
+            }
+            else if ([1, 4].includes(index)) {
+                ResaultString += `
                 <div class="verticallyCentered">
-                    <div class="container">
-                        <img src="image/LocationImg.png" alt="">
-                    </div>
-                    <div class="hotCityText">${item.city}</div>
+                <div>
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})">
+                        <div class="verticallyCentered">
+                            <div class="container">
+                                <img src="image/LocationImg.png" alt="">
+                            </div>
+                            <div class="hotCityText">${item.city}</div>
+                        </div>
+                    </a>
+                </div>`
+            }
+            else {
+                ResaultString += `
+                <div>
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})">
+                        <div class="verticallyCentered">
+                            <div class="container">
+                                <img src="image/LocationImg.png" alt="">
+                            </div>
+                            <div class="hotCityText">${item.city}</div>
+                        </div>
+                    </a>
                 </div>
-            </a>`
-        }
-        else if ([1, 4].includes(index)) {
-            ResaultString += `
-            <div class="verticallyCentered">
-            <div>
-                <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})">
-                    <div class="verticallyCentered">
-                        <div class="container">
-                            <img src="image/LocationImg.png" alt="">
-                        </div>
-                        <div class="hotCityText">${item.city}</div>
-                    </div>
-                </a>
-            </div>`
-        }
-        else {
-            ResaultString += `
-            <div>
-                <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})">
-                    <div class="verticallyCentered">
-                        <div class="container">
-                            <img src="image/LocationImg.png" alt="">
-                        </div>
-                        <div class="hotCityText">${item.city}</div>
-                    </div>
-                </a>
-            </div>
-            </div>`
-        }
+                </div>`
+            }
+            index++;
+        })
     }
     /** 刷新熱門城市的方法 */
     const reflash = () => {
@@ -162,20 +166,12 @@ function ChooseHotCity(bool) {
 
     //bool=true
     if (bool) {
-        let index = 0;
-        LeftCityArr.forEach(item => {
-            determine(item, index)
-            index++;
-        })
+        determine(LeftCityArr)
         reflash();
     }
     //bool=false
     else {
-        let index = 0;
-        RightCityArr.forEach(item => {
-            determine(item, index)
-            index++;
-        })
+        determine(RightCityArr)
         reflash();
     }
 }
