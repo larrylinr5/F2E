@@ -389,8 +389,15 @@ function getSelectUnitString(selectUnitList){
 function selectFun(selectItem){
     const e = document.getElementById(selectItem);
     const strUser = e.options[e.selectedIndex].value;
-    if(selectItem==='selectUnit') selectUnitValue = strUser
-    if(selectItem==='selectCity') selectCityValue = strUser
+
+    //當特色選擇改變時
+    if(selectItem==='selectUnit'){
+        selectUnitValue = strUser
+    } 
+    //當城市選擇改變時
+    if(selectItem==='selectCity'){
+        selectCityValue = strUser
+    } 
 }
 
 //#endregion
