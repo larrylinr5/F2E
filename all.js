@@ -11,8 +11,14 @@ init('View');
 
 /** 全域變數初始化 */
 function resetAreaVariable (){
+    /** HTML每個區塊id組成的array */
+    const AreaArr=['queryArea','HotCityArea']
+
     selectUnitValue='0';
     selectCityValue='0';
+    AreaArr.forEach(item=>{
+        document.getElementById(item).innerHTML=''
+    })
 }
 
 /** 選擇渲染哪一個畫面的方法 */
@@ -48,6 +54,9 @@ function init(pageString) {
 
     //將全域變數還原初始化
     resetAreaVariable()
+    
+    //將查詢欄位區塊渲染出來
+    showQueryArea(pageString)
 
     //製作 台灣景點 頁面
     if(pageString==='View'){
@@ -99,6 +108,65 @@ function init(pageString) {
 
     }
 }
+
+//#region 查詢欄位相關方法
+/** 渲染查詢欄位區塊 */
+function showQueryArea(pageString){
+    /** 預設HTML字串 */
+    let ResaultString=''
+
+    const GetResaultString=input=>{
+        return `
+        <div class="queryArea" style="background-image:url(${input});">
+            <div class="queryAreaRow">
+                <div>
+                    <img src="image/Welcome to Taiwan°.png" alt="Welcome to Taiwan">
+                </div>
+                <div>
+                    <img src="image/台北、台中、台南、屏東、宜蘭……遊遍台灣.png" alt="台北、台中、台南、屏東、宜蘭……遊遍台灣">
+                </div>
+                <!-- 查詢區 -->
+                <div class="queryAreaRowDetail">
+                    <div>
+                        <input value="搜尋關鍵字">
+                    </div>
+                    <div>
+                        <img src="image/QueryBtn.png" alt="關鍵字查詢按鈕">
+                    </div>
+                </div>
+                <!-- 下拉選單區 -->
+                <div class="queryAreaRowDetail">
+                    <div>
+                        <select id="selectUnit" onchange="selectFun('selectUnit')"></select>
+                    </div>
+                    <div>
+                        <select id="selectCity" onchange="selectFun('selectCity')"></select>
+                    </div>
+                    <div>
+                        <img src="image/LocalBtn.png" alt="定位按鈕">
+                    </div>
+                </div>
+            </div>
+        </div>`
+    }
+
+    //製作 台灣景點 查詢區塊
+    if(pageString==='View'){
+        ResaultString=GetResaultString('image/queryAreaView.png')
+    }
+    //製作 美食住宿 查詢區塊
+    else if(pageString==='Stay'){
+        ResaultString=GetResaultString('image/queryAreaFood.png')
+    }
+    //製作 景點交通 查詢區塊
+    else{
+        ResaultString=''
+    }
+
+    //渲染查詢欄位區塊
+    document.getElementById('queryArea').innerHTML=ResaultString
+}
+//#endregion
 
 //#region 熱門城市相關方法
 /** 選擇熱門城市區塊呈現畫面\
