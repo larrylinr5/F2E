@@ -107,6 +107,8 @@ function init(pageString) {
     else{
 
     }
+
+    document.getElementById('aaa').showModal();
 }
 
 //#region 查詢欄位相關方法
@@ -405,3 +407,6 @@ function selectFun(selectItem){
 
 
 
+function ddd(){
+    document.getElementById('aaa').close();
+}
