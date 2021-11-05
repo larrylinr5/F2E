@@ -243,3 +243,9 @@ table {
   margin-top: 3px;
   margin-bottom: 3px;
 }
+
+.dialogArea {
+  width: 676px;
+  height: 810px;
+  background: #000;
+}

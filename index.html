@@ -43,12 +43,20 @@
     <div class="container" id="HotCityArea"></div>
     <!-- #endregion -->
 
-    <dialog id="aaa">
-        <menu>
-            <button value="cancel" onclick="ddd()">Cancel</button>
-            <button id="confirmBtn" value="default">Confirm</button>
-          </menu>
+
+
+
+    <!-- #region彈出視窗 -->
+    <dialog id="showDialog">
+        <div class="container">
+            <!-- 卡片內容區 -->
+            <div class="dialogArea">
+                <img src="image/close.png" alt="關閉" onclick="closeDialog()">
+            </div>
+        </div>
     </dialog>
+    <!-- #endregion -->
+    
 
 
     <!-- #region載入Javascript -->

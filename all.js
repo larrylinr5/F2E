@@ -108,7 +108,7 @@ function init(pageString) {
 
     }
 
-    document.getElementById('aaa').showModal();
+    document.getElementById('showDialog').showModal();
 }
 
 //#region 查詢欄位相關方法
@@ -407,6 +407,14 @@ function selectFun(selectItem){
 
 
 
-function ddd(){
-    document.getElementById('aaa').close();
+
+
+
+//#region dialog方法區塊
+
+/** 關閉dialog */
+function closeDialog(){
+    document.getElementById('showDialog').close();
 }
+
+//#endregion
