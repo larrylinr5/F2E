@@ -19,11 +19,11 @@
         <div class="header">
             <div class="headerLeft">
                 <div>
-                    <a href="#"><img src="image/Group 4 (1) 2.png" alt="首頁"></a>
+                    <a href="index.html"><img src="image/Group 4 (1) 2.png" alt="首頁"></a>
                 </div>
             </div>
             <div class="headerRight">
-                <div>
+                <div onclick="choosePage(event)">
                     <a href="#" class="headerRightView"><img src="image/Frame 41.png" alt="台灣景點">
                         台灣景點</a>
                     <a href="#" class="headerRightStay"><img src="image/Frame 42.png" alt="美食住宿">
@@ -57,24 +57,10 @@
                 <!-- 下拉選單區 -->
                 <div class="queryAreaRowDetail">
                     <div>
-                        <select>
-                            <option>類別</option>
-                            <option>景點</option>
-                            <option>活動</option>
-                            <option>美食</option>
-                            <option>住宿</option>
-                        </select>
+                        <select id="selectUnit" onchange="selectFun('selectUnit')"></select>
                     </div>
                     <div>
-                        <select>
-                            <option>不分縣市</option>
-                            <option>台北市</option>
-                            <option>新北市</option>
-                            <option>桃園市</option>
-                            <option>台中市</option>
-                            <option>台南市</option>
-                            <option>高雄市</option>
-                        </select>
+                        <select id="selectCity" onchange="selectFun('selectCity')"></select>
                     </div>
                     <div>
                         <img src="image/LocalBtn.png" alt="定位按鈕">
@@ -93,6 +79,8 @@
     <!-- axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.js"></script>
     
+    <script src="https://cdnout.com/rxjs/rxjs.umd.js"></script>
+
     <script src="all.js"></script>
     
     <!-- #endregion -->
