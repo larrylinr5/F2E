@@ -41,6 +41,7 @@ axios.get('https://gist.motc.gov.tw/gist_api/V3/Map/Basic/City').then(
 
 /** 程式啟動進入點 */
 function init(pageString) {
+    /** 區域方法=>刷新下拉選單 */
     const reflashSelectUnit =(selectUnitList)=>{
         document.getElementById('selectUnit').innerHTML=getSelectUnitString(selectUnitList)
     }
@@ -64,9 +65,11 @@ function init(pageString) {
                 value:'Active'
             },
         ]
-
+        //載入 查詢欄位內 城市的下拉選單
         BuildSelectCity()
+        //刷新 查詢欄位內 細節的下拉選單  
         reflashSelectUnit(selectUnitList)
+        //渲染熱門城市區塊
         ShowHotCityArea(true);
     }
     //製作 美食住宿 頁面
@@ -86,7 +89,9 @@ function init(pageString) {
             },
         ]
 
+        //載入 查詢欄位內 城市的下拉選單
         BuildSelectCity()
+        //刷新 查詢欄位內 細節的下拉選單  
         reflashSelectUnit(selectUnitList)
     }
     //製作 景點交通 頁面
