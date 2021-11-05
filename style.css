@@ -244,8 +244,32 @@ table {
   margin-bottom: 3px;
 }
 
+/* ============================================================ */
+/* dialog的CSS */
 .dialogArea {
-  width: 676px;
-  height: 810px;
-  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogClose {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+#dailogTittle p {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+#dialogDetil p {
+  margin-top: 22px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
 }

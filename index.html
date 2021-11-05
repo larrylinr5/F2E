@@ -51,7 +51,20 @@
         <div class="container">
             <!-- 卡片內容區 -->
             <div class="dialogArea">
-                <img src="image/close.png" alt="關閉" onclick="closeDialog()">
+                <img src="image/close.png" alt="關閉" class="dialogClose" onclick="closeDialog()">
+                <div class="dialogPictureArea">
+                    <img src="image/temp1.png" alt="">
+                </div>
+                <div style="display: flex;justify-content:end">
+                    <img src="image/LeftBtn.png" alt="向前一筆">
+                    <img src="image/RigthBtn.png" alt="向後一筆">
+                </div>
+                <div id="dialogTittle"  style="display: flex;justify-content:start">
+                    <p>這邊可以塞動態標題</p>
+                </div>
+                <div id="dialogDetil" style="display: flex;justify-content:start">
+                    <p>這邊是動態文字細節</p>
+                </div>
             </div>
         </div>
     </dialog>
