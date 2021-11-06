@@ -2,10 +2,68 @@
 let selectUnitValue='0'
 /** 下拉式選單全域變數 */
 let selectCityValue='0'
+/** 首頁熱門活動資料存放變數 */
+let HomePageHotAction = []
+/** 首頁熱門餐飲資料存放變數 */
+let HomePageHotRestaurant = []
+
+//程式啟動進入點 ===> call完第一次api才呼叫
+// init('View');
 
 
-//程式啟動進入點
-init('View');
+
+
+
+
+//查首頁熱門活動 X 4筆
+axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
+    response=>{
+        console.log('response熱門活動>>>',response.data)
+        response.data.forEach(HotAction=>{
+            if(HomePageHotAction.length<4 && HotAction.Picture.PictureUrl1!==undefined && HotAction.Phone!==undefined ){
+                const Obj={
+                    Picture:HotAction.Picture.PictureUrl1,
+                    Title:HotAction.Name,
+                    Description:HotAction.Description,
+                    Location:HotAction.Location,
+                    Address:HotAction.Address,
+                    Phone:HotAction.Phone,
+                    StartTime:HotAction.StartTime.substr(0,10),
+                    EndTime:HotAction.EndTime.substr(0,10),
+                    money:HotAction.money||'免費'
+                }
+                HomePageHotAction.push(Obj);
+            }
+        })
+        console.log('HomePageHotAction>>>',HomePageHotAction)
+
+        //查熱門餐飲 X 10筆
+        axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant?$top=10&$format=JSON').then(
+            response=>{
+                console.log('response熱門餐飲>>>',response.data)
+                response.data.forEach(HotRestaurant=>{
+                    const Obj={
+                        Picture:HotRestaurant.Picture.PictureUrl1,
+                        Title:HotRestaurant.Name,
+                        Description:HotRestaurant.Description,
+                        Location:HotRestaurant.Address.substr(0,3),
+                        Address:HotRestaurant.Address,
+                        Phone:HotRestaurant.Phone,
+                        OpenTime:HotRestaurant.OpenTime,
+                        money:HotRestaurant.money||'免費'
+                    }
+                    HomePageHotRestaurant.push(Obj);
+                })
+                
+                console.log('HomePageHotRestaurant>>>',HomePageHotRestaurant)
+                init('View');
+            }   
+        )
+    }
+)
+
+
+
 
 
 
@@ -20,30 +78,6 @@ function resetAreaVariable (){
         document.getElementById(item).innerHTML=''
     })
 }
-
-/** 選擇渲染哪一個畫面的方法 */
-function choosePage (e){
-    console.log('target',e.srcElement.className)
-    const pageClass = e.srcElement.className
-
-    if(pageClass==='headerRightView'){
-        init('View')
-    }
-    else if(pageClass==='headerRightStay'){
-        init('Stay')
-    }
-    else{
-        init('Traffic')
-    }
-}
-
-axios.get('https://gist.motc.gov.tw/gist_api/V3/Map/Basic/City').then(
-    response=>{
-        console.log('response>>>',response.data)
-    }
-)
-
-
 
 /** 程式啟動進入點 */
 function init(pageString) {
@@ -80,6 +114,8 @@ function init(pageString) {
         reflashSelectUnit(selectUnitList)
         //渲染熱門城市區塊
         ShowHotCityArea(true);
+        //渲染熱門活動區塊
+        showHotActionArea()
     }
     //製作 美食住宿 頁面
     else if(pageString==='Stay'){
@@ -108,8 +144,28 @@ function init(pageString) {
 
     }
 
-    document.getElementById('showDialog').showModal();
+    
 }
+
+//#region 標題欄相關方法
+
+/** 選擇渲染哪一個畫面的方法 */
+function choosePage (e){
+    console.log('target',e.srcElement.className)
+    const pageClass = e.srcElement.className
+
+    if(pageClass==='headerRightView'){
+        init('View')
+    }
+    else if(pageClass==='headerRightStay'){
+        init('Stay')
+    }
+    else{
+        init('Traffic')
+    }
+}
+
+//#endregion
 
 //#region 查詢欄位相關方法
 /** 渲染查詢欄位區塊 */
@@ -407,6 +463,115 @@ function selectFun(selectItem){
 
 
 
+
+
+
+//#region 熱門活動相關方法
+
+function showHotActionArea(){
+    /** 預設HTML字串 */
+    let ResaultString=`
+    <div class="verticallyCentered">
+        <div class="container">
+    `
+
+    let index =0;
+    HomePageHotAction.forEach(HomePageHotActionItem=>{
+        if(index===2) ResaultString+='<div class="container">'
+        ResaultString+=BuildHotActionCard(HomePageHotActionItem,index)
+        if(index===1) ResaultString+='</div>'
+
+        index++;
+    })
+
+    ResaultString+=`
+        </div>
+    </div>
+    `
+
+    document.getElementById('HotActionArea').innerHTML=ResaultString
+}
+
+function BuildHotActionCard(HomePageHotActionItem,index){
+    let EditString=HomePageHotActionItem.Description.substr(0,18)+'<br>'
+    EditString+=HomePageHotActionItem.Description.substr(18,18)+'<br>'
+    EditString+=HomePageHotActionItem.Description.substr(36,18)+'<br>'
+    EditString+=HomePageHotActionItem.Description.substr(54,18)+'<br>'
+    if(HomePageHotActionItem.Description.length>72) EditString+='...'
+
+    return `
+    <div class="HotActionAreaCard">
+                    <img class="HotActionAreaPicture" src=${HomePageHotActionItem.Picture} alt="">
+                    <div class="HotActionAreaCarddiv">
+                        <div class="HotActionAreaTittle">${HomePageHotActionItem.Title}</div>
+                        <div class="HotActionAreaDetail">${EditString}</div>
+                        <div style="display: flex;">
+                            <img src="image/location.png" alt="" class="HotActionArealocation">
+                            <span>${HomePageHotActionItem.Address.substr(3,6)}</span>
+                            <div class="HotActionAreaCardButton" id=${index} onclick="HotActionAreaButton(event)">活動詳情</div>
+                        </div>
+                    </div>
+                </div>
+    `
+}
+
+//#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function HotActionAreaButton(e){
+    /** 首頁熱門活動資料的index */
+    const HotActionAreaCardIndex = e.srcElement.id
+    /** 編輯文字敘述排版字串 */
+    let EditString =''
+    
+
+    for(index=0;index<HomePageHotAction[HotActionAreaCardIndex].Description.length;index++){
+        const word=HomePageHotAction[HotActionAreaCardIndex].Description[index]
+
+        EditString+=word
+        if(index%28===27) EditString+='<br>'
+    }
+
+
+    //圖片innerHTML
+    document.getElementById('dialogPictureArea').innerHTML=`
+        <img src=${HomePageHotAction[HotActionAreaCardIndex].Picture} alt="">
+    `
+    //標題innerHTML
+    document.getElementById('dialogTittle').innerHTML=`
+        <p>${HomePageHotAction[HotActionAreaCardIndex].Title}</p>
+    `
+    //文字敘述innerHTML
+    document.getElementById('dialogDetail').innerHTML=`
+        <p>${EditString}</p>
+    `
+
+    document.getElementById('showDialog').showModal();
+}
 
 
 

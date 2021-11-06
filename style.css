@@ -244,6 +244,70 @@ table {
   margin-bottom: 3px;
 }
 
+
+/* ============================================================ */
+
+/* 熱門活動CSS */
+.HotActionAreaCard{
+  width: 522px;
+  height: 228px;
+  background: #ffb72c;
+  margin: 10px;
+  display: flex;
+}
+
+.HotActionAreaCarddiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin: 16px;
+}
+
+.HotActionAreaPicture{
+  height: 196px;
+  width: 187px;
+  margin: 16px;
+}
+
+.HotActionAreaTittle{
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.HotActionAreaDetail{
+  margin-top: 14px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.HotActionArealocation{
+  width: 16px;
+  height: 16px;
+}
+
+.HotActionAreaCardButton{
+  border: 1px #FF1D6C solid ;
+  border-radius: 10px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  color: #FF1D6C;
+  width: 68px;
+  height: 18px;
+  text-align: center;
+  vertical-align: auto;
+}
+
+
+
 /* ============================================================ */
 /* dialog的CSS */
 .dialogArea {
@@ -257,7 +321,8 @@ table {
   right: 0px;
 }
 
-#dailogTittle p {
+#dialogTittle p {
+  margin-top: 22px;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: normal;
@@ -265,7 +330,7 @@ table {
   line-height: 26px;
 }
 
-#dialogDetil p {
+#dialogDetail p {
   margin-top: 22px;
   font-family: Noto Sans TC;
   font-style: normal;

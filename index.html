@@ -43,6 +43,16 @@
     <div class="container" id="HotCityArea"></div>
     <!-- #endregion -->
 
+    <!-- #region熱門活動 -->
+    <div class="container" id="HotActionArea">
+        
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region熱門餐飲 -->
+    <div class="container HotRestaurantArea" id="HotRestaurantArea"></div>
+    <!-- #endregion -->
+
 
 
 
@@ -53,24 +63,11 @@
             <div class="dialogArea">
                 <img src="image/close.png" alt="關閉" class="dialogClose" onclick="closeDialog()">
                 <!-- 圖片渲染 -->
-                <div id="dialogPictureArea" class="dialogPictureArea">
-                    <img src="image/temp1.png" alt="">
-                </div>
-                <!-- 按鈕渲染 -->
-                <div style="display: flex;justify-content:end">
-                    <div>
-                        <img src="image/LeftBtn.png" alt="向前一筆">
-                        <img src="image/RigthBtn.png" alt="向後一筆">
-                    </div>
-                </div>
+                <div id="dialogPictureArea" class="dialogPictureArea"></div>
                 <!-- 標題渲染 -->
-                <div id="dialogTittle"  style="display: flex;justify-content:start">
-                    <p>這邊可以塞動態標題</p>
-                </div>
+                <div id="dialogTittle"  style="display: flex;justify-content:start"></div>
                 <!-- 文字敘述渲染 -->
-                <div id="dialogDetil" style="display: flex;justify-content:start">
-                    <p>這邊是動態文字細節</p>
-                </div>
+                <div id="dialogDetail" style="display: flex;justify-content:start"></div>
             </div>
         </div>
     </dialog>
