@@ -244,32 +244,30 @@ table {
   margin-bottom: 3px;
 }
 
-
 /* ============================================================ */
 
 /* 熱門活動CSS */
-.HotActionAreaCard{
+.HotActionAreaCard {
   width: 522px;
   height: 228px;
-  background: #ffb72c;
   margin: 10px;
   display: flex;
 }
 
-.HotActionAreaCarddiv{
+.HotActionAreaCarddiv {
   display: flex;
   flex-direction: column;
   justify-content: start;
   margin: 16px;
 }
 
-.HotActionAreaPicture{
+.HotActionAreaPicture {
   height: 196px;
   width: 187px;
   margin: 16px;
 }
 
-.HotActionAreaTittle{
+.HotActionAreaTittle {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: normal;
@@ -277,7 +275,7 @@ table {
   line-height: 23px;
 }
 
-.HotActionAreaDetail{
+.HotActionAreaDetail {
   margin-top: 14px;
   font-family: Noto Sans TC;
   font-style: normal;
@@ -286,27 +284,88 @@ table {
   line-height: 21px;
 }
 
-.HotActionArealocation{
+.HotActionArealocation {
   width: 16px;
   height: 16px;
 }
 
-.HotActionAreaCardButton{
-  border: 1px #FF1D6C solid ;
+.HotActionAreaCardButton {
+  border: 1px #ff1d6c solid;
   border-radius: 10px;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 21px;
-  color: #FF1D6C;
+  color: #ff1d6c;
   width: 68px;
   height: 18px;
   text-align: center;
   vertical-align: auto;
 }
 
+/* ============================================================ */
 
+/* 熱門餐飲CSS */
+
+.HotRestaurantCard {
+  width: 206px;
+  height: 243px;
+  margin: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.HotRestaurantAreaPicture {
+  width: 182px;
+  height: 137px;
+  margin: 12px;
+}
+
+.HotRestaurantTitle {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.HotRestaurantlocation {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+}
+
+.HotRestaurantlocation img {
+  width: 11px;
+  height: 13px;
+}
+
+.HotRestaurantlocation p {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 17px;
+  color: #007350;
+}
+
+/* ============================================================ */
+
+/* footer的CSS */
+.footer {
+  margin-top: 30px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: #acacac;
+  height: 35px;
+}
 
 /* ============================================================ */
 /* dialog的CSS */
@@ -319,6 +378,11 @@ table {
   position: absolute;
   top: 0px;
   right: 0px;
+}
+
+.dialogPictureArea {
+  width: 612px;
+  height: 495px;
 }
 
 #dialogTittle p {

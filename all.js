@@ -70,7 +70,7 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
 /** 全域變數初始化 */
 function resetAreaVariable (){
     /** HTML每個區塊id組成的array */
-    const AreaArr=['queryArea','HotCityArea']
+    const AreaArr=['queryArea','HotCityArea','HotActionArea','HotRestaurantArea']
 
     selectUnitValue='0';
     selectCityValue='0';
@@ -116,6 +116,8 @@ function init(pageString) {
         ShowHotCityArea(true);
         //渲染熱門活動區塊
         showHotActionArea()
+        //渲染熱門餐飲區塊
+        showHotRestaurantArea();
     }
     //製作 美食住宿 頁面
     else if(pageString==='Stay'){
@@ -515,33 +517,6 @@ function BuildHotActionCard(HomePageHotActionItem,index){
     `
 }
 
-//#endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function HotActionAreaButton(e){
     /** 首頁熱門活動資料的index */
     const HotActionAreaCardIndex = e.srcElement.id
@@ -573,6 +548,95 @@ function HotActionAreaButton(e){
     document.getElementById('showDialog').showModal();
 }
 
+//#endregion
+
+//#region 熱門餐飲相關方法
+
+function showHotRestaurantArea(){
+    /** 預設HTML字串 */
+    let ResaultString='<div class="container">'
+
+    let index=0;
+    HomePageHotRestaurant.forEach(HomePageHotRestaurantItem=>{ 
+        ResaultString+=BuildHotRestaurantCard(HomePageHotRestaurantItem,index)
+        if(index===4 || index===9) ResaultString+='</div>'
+        if(index===4) ResaultString+='<div class="container">'
+        index++;
+    })
+
+    document.getElementById('HotRestaurantArea').innerHTML=ResaultString
+}
+
+function BuildHotRestaurantCard(HomePageHotRestaurantItem,index){
+    return `
+    <div class="HotRestaurantCard" onclick="HotRestaurantEvent(event)" id="${index}">
+        <img src=${HomePageHotRestaurantItem.Picture} alt="" class="HotRestaurantAreaPicture" onclick="HotRestaurantEvent(event)" id="${index}">
+        <div class="HotRestaurantTitle" onclick="HotRestaurantEvent(event)" id="${index}">${HomePageHotRestaurantItem.Title}</div>
+        <div class="HotRestaurantlocation" onclick="HotRestaurantEvent(event)" id="${index}">
+            <img src="image/location.png" alt="" onclick="HotRestaurantEvent(event)" id="${index}"><p onclick="HotRestaurantEvent(event)" id="${index}">${HomePageHotRestaurantItem.Address.substr(0,6)}</p>
+        </div>
+    </div>`
+}
+
+function HotRestaurantEvent(e){
+    /** 首頁熱門活動資料的index */
+    const HotRestaurantCardIndex = e.srcElement.id
+    
+    /** 編輯文字敘述排版字串 */
+    let EditString =''
+    
+
+    for(index=0;index<HomePageHotRestaurant[HotRestaurantCardIndex].Description.length;index++){
+        const word=HomePageHotRestaurant[HotRestaurantCardIndex].Description[index]
+
+        EditString+=word
+        if(index%28===27) EditString+='<br>'
+    }
+
+
+    //圖片innerHTML
+    document.getElementById('dialogPictureArea').innerHTML=`
+        <img src=${HomePageHotRestaurant[HotRestaurantCardIndex].Picture} alt="" class="dialogPictureArea">
+    `
+    //標題innerHTML
+    document.getElementById('dialogTittle').innerHTML=`
+        <p>${HomePageHotRestaurant[HotRestaurantCardIndex].Title}</p>
+    `
+    //文字敘述innerHTML
+    document.getElementById('dialogDetail').innerHTML=`
+        <p>${EditString}</p>
+    `
+
+    document.getElementById('showDialog').showModal();
+}
+
+//#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //#region dialog方法區塊
@@ -583,3 +647,10 @@ function closeDialog(){
 }
 
 //#endregion
+
+
+
+function aaa(){
+    alert('aaa')
+}
+
