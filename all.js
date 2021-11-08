@@ -11,7 +11,11 @@ let HomePageHotRestaurant = []
 // init('View');
 
 
-
+axios.get(' https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/Taipei').then(
+    response=>{
+        console.log('>>>>>',response.data)
+    }
+)
 
 
 
@@ -338,7 +342,7 @@ function ChooseHotCity(bool) {
         Array.forEach(item => {
             if ([0, 3, 6].includes(index)) {
                 ResaultString += `
-                <a href="#" class="container hotCityVertically" style="background-image:url(${item.bgImage})">
+                <a href="#" class="container hotCityVertically" style="background-image:url(${item.bgImage})" onclick="aaa()">
                     <div class="verticallyCentered">
                         <div class="container">
                             <img src="image/LocationImg.png" alt="">
@@ -351,7 +355,7 @@ function ChooseHotCity(bool) {
                 ResaultString += `
                 <div class="verticallyCentered">
                 <div>
-                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})">
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="aaa()">
                         <div class="verticallyCentered">
                             <div class="container">
                                 <img src="image/LocationImg.png" alt="">
@@ -364,7 +368,7 @@ function ChooseHotCity(bool) {
             else {
                 ResaultString += `
                 <div>
-                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})">
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="aaa()">
                         <div class="verticallyCentered">
                             <div class="container">
                                 <img src="image/LocationImg.png" alt="">
@@ -548,6 +552,14 @@ function HotActionAreaButton(e){
     document.getElementById('showDialog').showModal();
 }
 
+function showNewHotActionArea(location){
+    //將全域變數還原初始化
+    resetAreaVariable()
+    /** 查詢字串 */
+    let QueryString=`
+    https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/${location}
+    `
+}
 //#endregion
 
 //#region 熱門餐飲相關方法
