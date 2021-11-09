@@ -583,21 +583,25 @@ function showNewHotActionArea(e){
             ScenicSpotCityMaxPage = response.data.length%20===0?response.data.length/20:Number((response.data.length/20).toFixed())+1
 
             response.data.forEach(ScenicSpotCityItem=>{
-                const Obj={
-                    Picture:ScenicSpotCityItem.Picture.PictureUrl1,
-                    Title:ScenicSpotCityItem.Name,
-                    Description:ScenicSpotCityItem.Description,
-                    Location:ScenicSpotCityItem.City,
-                    Address:ScenicSpotCityItem.Address,
-                    Phone:ScenicSpotCityItem.Phone,
-                    OpenTime:ScenicSpotCityItem.OpenTime,
-                    money:ScenicSpotCityItem.money||'免費'
+                if(ScenicSpotCityItem.Picture!==undefined && ScenicSpotCityItem.Picture.PictureUrl1!==undefined){
+                    const Obj={
+                        Picture:ScenicSpotCityItem.Picture.PictureUrl1,
+                        Title:ScenicSpotCityItem.Name,
+                        Description:ScenicSpotCityItem.Description,
+                        Location:ScenicSpotCityItem.City,
+                        Address:ScenicSpotCityItem.Address,
+                        Phone:ScenicSpotCityItem.Phone,
+                        OpenTime:ScenicSpotCityItem.OpenTime,
+                        money:ScenicSpotCityItem.money||'免費'
+                    }
+                    ScenicSpotCity.push(Obj);
                 }
-                ScenicSpotCity.push(Obj);
+                
             })
+            console.log('response熱門景點>>>',ScenicSpotCity.length)
             showQueryArea('View')
             showNewHotCityArea(ScenicSpotCityPage)
-            console.log('response熱門景點>>>',ScenicSpotCity)
+            
 
         }
     )
@@ -607,20 +611,36 @@ function showNewHotCityArea(index){
     /** 預設HTML字串 */
     let ResaultString='<div class="container">'
 
-    for(i=index;i<index+20;i++){
-        ResaultString+=BuildHotCtiyAreaCard(ScenicSpotCity[i],i)
-        if(i===4+index||i===9+index||i===14+index||i===19+index){
-            ResaultString+='</div>'
-        } 
-        if(i===4+index||i===9+index||i===14+index){
-            ResaultString+='<div class="container">'
-        } 
+    if(ScenicSpotCity.length>19){
+        for(i=index;i<index+20;i++){
+            ResaultString+=BuildHotCtiyAreaCard(ScenicSpotCity[i],i)
+            if(i===4+index||i===9+index||i===14+index||i===19+index){
+                ResaultString+='</div>'
+            } 
+            if(i===4+index||i===9+index||i===14+index){
+                ResaultString+='<div class="container">'
+            } 
+        }
+        ResaultString+=`
+        <div class="container">
+            <img src="image/LeftBtn.png" alt="" onclick="LeftScenicSpotCityPage()"><div class="HotCityAreaBtn"><p>${ScenicSpotCityPage/20}/${ScenicSpotCityMaxPage}</p></div><img src="image/RigthBtn.png" alt="" onclick="RightScenicSpotCityPage()">
+        </div>
+        `
     }
-    ResaultString+=`
-    <div class="container">
-        <img src="image/LeftBtn.png" alt="" onclick="LeftScenicSpotCityPage()"><div class="HotCityAreaBtn"><p>${ScenicSpotCityPage/20}/${ScenicSpotCityMaxPage}</p></div><img src="image/RigthBtn.png" alt="" onclick="RightScenicSpotCityPage()">
-    </div>
-    `
+    else{
+        let index=0
+        ScenicSpotCity.forEach(x=>{
+            ResaultString+=BuildHotCtiyAreaCard(x,index)
+            if(index===4||index===9||index===14||index===19){
+                ResaultString+='</div>'
+            } 
+            if(index===4||index===9||index===14){
+                ResaultString+='<div class="container">'
+            } 
+            index++
+        })
+    }
+    
 
     document.getElementById('HotCityArea2').innerHTML=ResaultString
 }
