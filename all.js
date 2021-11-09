@@ -6,23 +6,28 @@ let selectCityValue='0'
 let HomePageHotAction = []
 /** 首頁熱門餐飲資料存放變數 */
 let HomePageHotRestaurant = []
+/** 熱門景點(城市)資料存放區 */
+let ScenicSpotCity =[]
+/** 熱門景點(城市)目前所在頁面 */
+let ScenicSpotCityPage = 0
+/** 熱門景點(城市)最大頁面 */
+let ScenicSpotCityMaxPage = 0
 
 //程式啟動進入點 ===> call完第一次api才呼叫
 // init('View');
 
 
-axios.get(' https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/Taipei').then(
-    response=>{
-        console.log('>>>>>',response.data)
-    }
-)
+// axios.get(' https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/Taipei').then(
+//     response=>{
+//         console.log('>>>>>',response.data)
+//     }
+// )
 
 
 
 //查首頁熱門活動 X 4筆
 axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
     response=>{
-        console.log('response熱門活動>>>',response.data)
         response.data.forEach(HotAction=>{
             if(HomePageHotAction.length<4 && HotAction.Picture.PictureUrl1!==undefined && HotAction.Phone!==undefined ){
                 const Obj={
@@ -39,12 +44,10 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
                 HomePageHotAction.push(Obj);
             }
         })
-        console.log('HomePageHotAction>>>',HomePageHotAction)
 
         //查熱門餐飲 X 10筆
         axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant?$top=10&$format=JSON').then(
             response=>{
-                console.log('response熱門餐飲>>>',response.data)
                 response.data.forEach(HotRestaurant=>{
                     const Obj={
                         Picture:HotRestaurant.Picture.PictureUrl1,
@@ -59,7 +62,6 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
                     HomePageHotRestaurant.push(Obj);
                 })
                 
-                console.log('HomePageHotRestaurant>>>',HomePageHotRestaurant)
                 init('View');
             }   
         )
@@ -276,62 +278,76 @@ function ChooseHotCity(bool) {
     const LeftCityArr = [
         {
             bgImage: 'image/Taipei.png',
-            city: '台北市'
+            city: '台北市',
+            id:'Taipei'
         },
         {
             bgImage: 'image/NewTaipei.png',
-            city: '新北市'
+            city: '新北市',
+            id:'NewTaipei'
         },
         {
             bgImage: 'image/Taoyuan.png',
-            city: '桃園市'
+            city: '桃園市',
+            id:'Taoyuan'
         },
         {
             bgImage: 'image/Hsinchu.png',
-            city: '新竹市'
+            city: '新竹市',
+            id:'Hsinchu'
         },
         {
             bgImage: 'image/Taichung.png',
-            city: '台中市'
+            city: '台中市',
+            id:'Taichung'
         },
         {
             bgImage: 'image/Nantou.png',
-            city: '南投'
+            city: '南投',
+            id:'NantouCounty'
         },
         {
             bgImage: 'image/Chiayi.png',
-            city: '嘉義'
+            city: '嘉義',
+            id:'ChiayiCounty'
         }
     ]
     /** 熱門城市2 */
     const RightCityArr = [
         {
             bgImage: 'image/Tainan.png',
-            city: '台南'
+            city: '台南',
+            id:'Tainan'
         },
         {
             bgImage: 'image/Kaohsiung.png',
-            city: '高雄'
+            city: '高雄',
+            id:'Kaohsiung'
         },
         {
             bgImage: 'image/Pingtung.png',
-            city: '屏東'
+            city: '屏東',
+            id:'PingtungCounty'
         },
         {
             bgImage: 'image/Yilan.png',
-            city: '宜蘭'
+            city: '宜蘭',
+            id:'YilanCounty'
         },
         {
             bgImage: 'image/Hualien.png',
-            city: '花蓮'
+            city: '花蓮',
+            id:'HualienCounty'
         },
         {
             bgImage: 'image/Taitung.png',
-            city: '台東'
+            city: '台東',
+            id:'TaitungCounty'
         },
         {
             bgImage: 'image/Penghu.png',
-            city: '金門馬祖.澎湖'
+            city: '金門馬祖.澎湖',
+            id:'PenghuCounty'
         }
     ]
     /** innerHTML變更用字串 */
@@ -342,12 +358,12 @@ function ChooseHotCity(bool) {
         Array.forEach(item => {
             if ([0, 3, 6].includes(index)) {
                 ResaultString += `
-                <a href="#" class="container hotCityVertically" style="background-image:url(${item.bgImage})" onclick="aaa()">
+                <a href="#" class="container hotCityVertically" style="background-image:url(${item.bgImage})" onclick="showNewHotActionArea(event)" id="${item.id}">
                     <div class="verticallyCentered">
                         <div class="container">
-                            <img src="image/LocationImg.png" alt="">
+                            <img src="image/LocationImg.png" alt="" onclick="showNewHotActionArea(event)" id="${item.id}">
                         </div>
-                        <div class="hotCityText">${item.city}</div>
+                        <div class="hotCityText" onclick="showNewHotActionArea(event)" id="${item.id}">${item.city}</div>
                     </div>
                 </a>`
             }
@@ -355,12 +371,12 @@ function ChooseHotCity(bool) {
                 ResaultString += `
                 <div class="verticallyCentered">
                 <div>
-                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="aaa()">
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="showNewHotActionArea(${item.id})">
                         <div class="verticallyCentered">
                             <div class="container">
-                                <img src="image/LocationImg.png" alt="">
+                                <img src="image/LocationImg.png" alt="" onclick="showNewHotActionArea(event)" id="${item.id}">
                             </div>
-                            <div class="hotCityText">${item.city}</div>
+                            <div class="hotCityText" onclick="showNewHotActionArea(event)" id="${item.id}">${item.city}</div>
                         </div>
                     </a>
                 </div>`
@@ -368,12 +384,12 @@ function ChooseHotCity(bool) {
             else {
                 ResaultString += `
                 <div>
-                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="aaa()">
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="showNewHotActionArea(${item.id})">
                         <div class="verticallyCentered">
                             <div class="container">
-                                <img src="image/LocationImg.png" alt="">
+                                <img src="image/LocationImg.png" alt="" onclick="showNewHotActionArea(event)" id="${item.id}">
                             </div>
-                            <div class="hotCityText">${item.city}</div>
+                            <div class="hotCityText" onclick="showNewHotActionArea(event)" id="${item.id}">${item.city}</div>
                         </div>
                     </a>
                 </div>
@@ -552,13 +568,121 @@ function HotActionAreaButton(e){
     document.getElementById('showDialog').showModal();
 }
 
-function showNewHotActionArea(location){
+function showNewHotActionArea(e){
     //將全域變數還原初始化
     resetAreaVariable()
     /** 查詢字串 */
     let QueryString=`
-    https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/${location}
+    https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/${e.srcElement.id}
     `
+    
+    axios.get(QueryString).then(
+        response=>{
+            console.log('response熱門景點>>>',response.data)
+
+            ScenicSpotCityMaxPage = response.data.length%20===0?response.data.length%20:Number((response.data.length/20).toFixed())+1
+
+            response.data.forEach(ScenicSpotCityItem=>{
+                const Obj={
+                    Picture:ScenicSpotCityItem.Picture.PictureUrl1,
+                    Title:ScenicSpotCityItem.Name,
+                    Description:ScenicSpotCityItem.Description,
+                    Location:ScenicSpotCityItem.City,
+                    Address:ScenicSpotCityItem.Address,
+                    Phone:ScenicSpotCityItem.Phone,
+                    OpenTime:ScenicSpotCityItem.OpenTime,
+                    money:ScenicSpotCityItem.money||'免費'
+                }
+                ScenicSpotCity.push(Obj);
+            })
+            showQueryArea('View')
+            showNewHotCityArea(ScenicSpotCityPage)
+            console.log('response熱門景點>>>',ScenicSpotCity)
+
+        }
+    )
+}
+
+function showNewHotCityArea(index){
+    /** 預設HTML字串 */
+    let ResaultString='<div class="container">'
+
+    for(i=index;i<index+20;i++){
+        console.log('in1')
+        ResaultString+=BuildHotCtiyAreaCard(ScenicSpotCity[i],i)
+        if(i===4+index||i===9+index||i===14+index||i===19+index){
+            console.log('in2')
+            ResaultString+='</div>'
+        } 
+        if(i===4+index||i===9+index||i===14+index){
+            console.log('in3')
+            ResaultString+='<div class="container">'
+        } 
+    }
+    ResaultString+=`
+    <div class="container">
+        <img src="image/LeftBtn.png" alt="" onclick="LeftScenicSpotCityPage()"><div class="HotCityAreaBtn"><p>${ScenicSpotCityPage/20}/${ScenicSpotCityMaxPage}</p></div><img src="image/RigthBtn.png" alt="" onclick="RightScenicSpotCityPage()">
+    </div>
+    `
+
+    document.getElementById('HotCityArea2').innerHTML=ResaultString
+}
+
+function LeftScenicSpotCityPage(){
+    if(ScenicSpotCityPage/20>0){
+        ScenicSpotCityPage-=20;
+        showNewHotCityArea(ScenicSpotCityPage)
+    }
+}
+
+function RightScenicSpotCityPage(){
+    if(ScenicSpotCityPage/20<ScenicSpotCityMaxPage){
+        ScenicSpotCityPage+=20;
+        showNewHotCityArea(ScenicSpotCityPage)
+    }
+}
+
+function BuildHotCtiyAreaCard(ScenicSpotCityItem,index){
+    return `
+    <div class="HotRestaurantCard" onclick="NewHotCtiyAreaEvent(event)" id="${index}">
+        <img src=${ScenicSpotCityItem.Picture} alt="" class="HotRestaurantAreaPicture" onclick="NewHotCtiyAreaEvent(event)" id="${index}">
+        <div class="HotRestaurantTitle" onclick="NewHotCtiyAreaEvent(event)" id="${index}">${ScenicSpotCityItem.Title}</div>
+        <div class="HotRestaurantlocation" onclick="NewHotCtiyAreaEvent(event)" id="${index}">
+            <img src="image/location.png" alt="" onclick="NewHotCtiyAreaEvent(event)" id="${index}"><p onclick="NewHotCtiyAreaEvent(event)" id="${index}">${ScenicSpotCityItem.Location}</p>
+        </div>
+    </div>`
+}
+
+function NewHotCtiyAreaEvent(e){
+    /** 首頁熱門活動資料的index */
+    const ScenicSpotCityItemIndex = e.srcElement.id
+    
+    /** 編輯文字敘述排版字串 */
+    let EditString =''
+    
+
+    for(index=0;index<ScenicSpotCity[ScenicSpotCityItemIndex].Description.length;index++){
+        const word=ScenicSpotCity[ScenicSpotCityItemIndex].Description[index]
+
+        EditString+=word
+        if(index%28===27) EditString+='<br>'
+    }
+
+
+    //圖片innerHTML
+    document.getElementById('dialogPictureArea').innerHTML=`
+        <img src=${ScenicSpotCity[ScenicSpotCityItemIndex].Picture} alt="" class="dialogPictureArea">
+    `
+    //標題innerHTML
+    document.getElementById('dialogTittle').innerHTML=`
+        <p>${ScenicSpotCity[ScenicSpotCityItemIndex].Title}</p>
+    `
+    //文字敘述innerHTML
+    document.getElementById('dialogDetail').innerHTML=`
+        <p>${EditString}</p>
+    `
+
+    document.getElementById('showDialog').showModal();
 }
 //#endregion
 

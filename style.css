@@ -244,6 +244,12 @@ table {
   margin-bottom: 3px;
 }
 
+.HotCityAreaBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-top: 10px;
+}
 /* ============================================================ */
 
 /* 熱門活動CSS */
