@@ -76,7 +76,7 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
 /** 全域變數初始化 */
 function resetAreaVariable (){
     /** HTML每個區塊id組成的array */
-    const AreaArr=['queryArea','HotCityArea','HotActionArea','HotRestaurantArea']
+    const AreaArr=['queryArea','HotCityArea','HotActionArea','HotCityArea2','HotRestaurantArea']
 
     selectUnitValue='0';
     selectCityValue='0';
@@ -371,7 +371,7 @@ function ChooseHotCity(bool) {
                 ResaultString += `
                 <div class="verticallyCentered">
                 <div>
-                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="showNewHotActionArea(${item.id})">
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="showNewHotActionArea(event)" id="${item.id}">
                         <div class="verticallyCentered">
                             <div class="container">
                                 <img src="image/LocationImg.png" alt="" onclick="showNewHotActionArea(event)" id="${item.id}">
@@ -384,7 +384,7 @@ function ChooseHotCity(bool) {
             else {
                 ResaultString += `
                 <div>
-                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="showNewHotActionArea(${item.id})">
+                    <a href="#" class="container hotCityHorizontal" style="background-image:url(${item.bgImage})" onclick="onclick="showNewHotActionArea(event)" id="${item.id}">
                         <div class="verticallyCentered">
                             <div class="container">
                                 <img src="image/LocationImg.png" alt="" onclick="showNewHotActionArea(event)" id="${item.id}">
@@ -575,12 +575,12 @@ function showNewHotActionArea(e){
     let QueryString=`
     https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/${e.srcElement.id}
     `
-    
+    console.log('查詢字串',QueryString)
     axios.get(QueryString).then(
         response=>{
             console.log('response熱門景點>>>',response.data)
 
-            ScenicSpotCityMaxPage = response.data.length%20===0?response.data.length%20:Number((response.data.length/20).toFixed())+1
+            ScenicSpotCityMaxPage = response.data.length%20===0?response.data.length/20:Number((response.data.length/20).toFixed())+1
 
             response.data.forEach(ScenicSpotCityItem=>{
                 const Obj={
@@ -608,14 +608,11 @@ function showNewHotCityArea(index){
     let ResaultString='<div class="container">'
 
     for(i=index;i<index+20;i++){
-        console.log('in1')
         ResaultString+=BuildHotCtiyAreaCard(ScenicSpotCity[i],i)
         if(i===4+index||i===9+index||i===14+index||i===19+index){
-            console.log('in2')
             ResaultString+='</div>'
         } 
         if(i===4+index||i===9+index||i===14+index){
-            console.log('in3')
             ResaultString+='<div class="container">'
         } 
     }
@@ -660,7 +657,8 @@ function NewHotCtiyAreaEvent(e){
     /** 編輯文字敘述排版字串 */
     let EditString =''
     
-
+    //如果沒有說明，就不幫說明文字換行
+    if(ScenicSpotCity[ScenicSpotCityItemIndex].Description!==undefined)
     for(index=0;index<ScenicSpotCity[ScenicSpotCityItemIndex].Description.length;index++){
         const word=ScenicSpotCity[ScenicSpotCityItemIndex].Description[index]
 
@@ -721,7 +719,8 @@ function HotRestaurantEvent(e){
     /** 編輯文字敘述排版字串 */
     let EditString =''
     
-
+    //如果沒有說明，就不幫說明文字換行
+    if(HomePageHotRestaurant[HotRestaurantCardIndex].Description!==undefined)
     for(index=0;index<HomePageHotRestaurant[HotRestaurantCardIndex].Description.length;index++){
         const word=HomePageHotRestaurant[HotRestaurantCardIndex].Description[index]
 
