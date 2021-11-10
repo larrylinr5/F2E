@@ -6,6 +6,8 @@ let selectCityValue='0'
 let HomePageHotAction = []
 /** 首頁熱門餐飲資料存放變數 */
 let HomePageHotRestaurant = []
+/** 熱門住宿資料存放變數 */
+let HomePageHotHotel = []
 /** 熱門景點(城市)資料存放區 */
 let ScenicSpotCity =[]
 /** 熱門景點(城市)目前所在頁面 */
@@ -75,6 +77,30 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
         )
     }
 )
+
+axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Hotel').then(
+            response=>{
+                console.log('Hotel>>>',response.data)
+                
+                let HotelIndex=0
+                response.data.forEach(Hotel=>{
+                    if(HotelIndex<10&&Hotel.Picture.PictureUrl1!==undefined && Hotel.Phone!==undefined ){
+                        const Obj={
+                            Picture:Hotel.Picture.PictureUrl1,
+                            Title:Hotel.Name,
+                            Description:Hotel.Description,
+                            Location:Hotel.Address.substr(0,3),
+                            Address:Hotel.Address,
+                            Phone:Hotel.Phone,
+                        } 
+                        HomePageHotHotel.push(Obj);
+                        HotelIndex++
+                    }
+                })
+                console.log('Hotel2>>>',HomePageHotHotel)
+                // init('View');
+            }   
+        )
 
 
 
