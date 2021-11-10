@@ -182,6 +182,8 @@ function init(pageString) {
         reflashSelectUnit(selectUnitList)
         //渲染熱門餐飲區塊
         showHotRestaurantArea();
+        //渲染住宿區塊
+        showHotelArea()
     }
     //製作 景點交通 頁面
     else{
@@ -968,7 +970,68 @@ function HotRestaurantEvent(e){
 //#endregion
 
 
+//#region hotel相關方法
 
+function showHotelArea(){
+    /** 預設HTML字串 */
+    let ResaultString='<div class="container">'
+
+    let index=0;
+    HomePageHotHotel.forEach(HomePageHotHotelItem=>{ 
+        ResaultString+=BuildHotelAreaCard(HomePageHotHotelItem,index)
+        if(index===4 || index===9) ResaultString+='</div>'
+        if(index===4) ResaultString+='<div class="container">'
+        index++;
+    })
+
+    document.getElementById('HotelArea').innerHTML=ResaultString
+}
+
+function BuildHotelAreaCard(HomePageHotHotelItem,index){
+    return `
+    <div class="HotRestaurantCard" onclick="HotelAreaEvent(event)" id="${index}">
+        <img src=${HomePageHotHotelItem.Picture} alt="" class="HotRestaurantAreaPicture" onclick="HotelAreaEvent(event)" id="${index}">
+        <div class="HotRestaurantTitle" onclick="HotelAreaEvent(event)" id="${index}">${HomePageHotHotelItem.Title}</div>
+        <div class="HotRestaurantlocation" onclick="HotelAreaEvent(event)" id="${index}">
+            <img src="image/location.png" alt="" onclick="HotelAreaEvent(event)" id="${index}"><p onclick="HotelAreaEvent(event)" id="${index}">${HomePageHotHotelItem.Address.substr(0,6)}</p>
+        </div>
+    </div>`
+}
+
+function HotelAreaEvent(e){
+    /** 首頁熱門活動資料的index */
+    const HotelAreaEventIndex = e.srcElement.id
+    
+    /** 編輯文字敘述排版字串 */
+    let EditString =''
+    
+    //如果沒有說明，就不幫說明文字換行
+    if(HomePageHotHotel[HotelAreaEventIndex].Description!==undefined)
+    for(index=0;index<HomePageHotHotel[HotelAreaEventIndex].Description.length;index++){
+        const word=HomePageHotHotel[HotelAreaEventIndex].Description[index]
+
+        EditString+=word
+        if(index%28===27) EditString+='<br>'
+    }
+
+
+    //圖片innerHTML
+    document.getElementById('dialogPictureArea').innerHTML=`
+        <img src=${HomePageHotHotel[HotelAreaEventIndex].Picture} alt="" class="dialogPictureArea">
+    `
+    //標題innerHTML
+    document.getElementById('dialogTittle').innerHTML=`
+        <p>${HomePageHotHotel[HotelAreaEventIndex].Title}</p>
+    `
+    //文字敘述innerHTML
+    document.getElementById('dialogDetail').innerHTML=`
+        <p>${EditString}</p>
+    `
+
+    document.getElementById('showDialog').showModal();
+}
+
+//#endregion
 
 
 
