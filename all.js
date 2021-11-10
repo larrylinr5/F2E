@@ -12,6 +12,14 @@ let ScenicSpotCity =[]
 let ScenicSpotCityPage = 0
 /** 熱門景點(城市)最大頁面 */
 let ScenicSpotCityMaxPage = 0
+/** 頁面 0=>台灣景點 1=>美食住宿 2=>交通 */
+let PageIndex=0
+/** 下拉選單查詢後資料存放區 */
+let ChangeSelect=[]
+/** 拉選單查詢後資料目前所在頁面 */
+let selectChangePage=0
+/** 拉選單查詢後資料最大頁面 */
+let selectChangeMaxPage=0
 
 //程式啟動進入點 ===> call完第一次api才呼叫
 // init('View');
@@ -194,7 +202,7 @@ function showQueryArea(pageString){
                 <!-- 查詢區 -->
                 <div class="queryAreaRowDetail">
                     <div>
-                        <input value="搜尋關鍵字">
+                        <input value="搜尋關鍵字(功能還未實作)">
                     </div>
                     <div>
                         <img src="image/QueryBtn.png" alt="關鍵字查詢按鈕">
@@ -231,6 +239,168 @@ function showQueryArea(pageString){
 
     //渲染查詢欄位區塊
     document.getElementById('queryArea').innerHTML=ResaultString
+}
+
+/** 下拉選單選擇後觸發的畫面渲染 */
+function showselectChange(){
+    console.log('selectUnitValue>>',selectUnitValue)
+    console.log('selectCityValue>>',selectCityValue)
+
+    /** 查詢用字串 */
+    let QueryString='';
+    switch (selectUnitValue) {
+        case 'View':
+            QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot'
+            break;
+        case 'Active':
+            QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity'
+            break;
+        case 'Food':
+            QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant'
+            break;
+        case 'Stay':
+            QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Hotel'
+            break;
+        default :
+            if(PageIndex ==='0') QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot'
+            if(PageIndex ==='1') QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant'
+    }
+    if(selectCityValue!=='0'){
+        QueryString+='/'+selectCityValue
+    }
+    console.log('QueryString',QueryString)
+    //若下拉式選單其中一個有選擇時，查詢並渲染
+    if(selectUnitValue!='0'||selectCityValue!='0'){
+        axios.get(QueryString).then( 
+            response=>{
+                console.log('response>>>',response.data)
+                selectChangeMaxPage = response.data.length%20===0?response.data.length/20:Number((response.data.length/20).toFixed())+1
+
+                ChangeSelect=[]
+
+                response.data.forEach(Item=>{
+                    
+                    if(Item.Picture!==undefined && Item.Picture.PictureUrl1!==undefined){
+                        const Obj={
+                            Picture:Item.Picture.PictureUrl1,
+                            Title:Item.Name,
+                            Description:Item.Description,
+                            Location:selectUnitValue==='View'?Item.Address:selectUnitValue==='Action'?Item.Location:selectUnitValue==='Food'?Item.Address.substr(0,3):Item.Location,
+                            Address:Item.Address,
+                            Phone:Item.Phone,
+                        }
+                        ChangeSelect.push(Obj);
+                    }
+                })
+                // if(selectUnitValue==='View'||selectUnitValue==='Action') showQueryArea('View')
+                // else showQueryArea('Stay')
+                console.log('select',ChangeSelect)
+                /** HTML每個區塊id組成的array */
+                const AreaArr=['HotCityArea','HotActionArea','HotCityArea2','HotRestaurantArea']
+
+    
+                AreaArr.forEach(item=>{
+                    document.getElementById(item).innerHTML=''
+                })
+                showSelectChangeArea(selectChangePage)
+        })
+    }
+}
+
+function showSelectChangeArea(index){
+    /** 預設HTML字串 */
+    let ResaultString='<div class="container">'
+
+    if(ChangeSelect.length>19){
+        for(i=index;i<index+20;i++){
+            ResaultString+=BuildSelectChangeCard(ChangeSelect[i],i)
+            if(i===4+index||i===9+index||i===14+index||i===19+index){
+                ResaultString+='</div>'
+            } 
+            if(i===4+index||i===9+index||i===14+index){
+                ResaultString+='<div class="container">'
+            } 
+        }
+        ResaultString+=`
+        <div class="container">
+            <img src="image/LeftBtn.png" alt="" onclick="LeftselectChangePage()"><div class="HotCityAreaBtn"><p>${selectChangePage/20}/${selectChangeMaxPage}</p></div><img src="image/RigthBtn.png" alt="" onclick="RightselectChangePage()">
+        </div>
+        `
+    }
+    else{
+        let index=0
+        ChangeSelect.forEach(x=>{
+            ResaultString+=BuildSelectChangeCard(x,index)
+            if(index===4||index===9||index===14||index===19){
+                ResaultString+='</div>'
+            } 
+            if(index===4||index===9||index===14){
+                ResaultString+='<div class="container">'
+            } 
+            index++
+        })
+    }
+    
+
+    document.getElementById('HotCityArea2').innerHTML=ResaultString
+}
+
+function BuildSelectChangeCard(ChangeSelectItem,index){
+    return `
+    <div class="HotRestaurantCard" onclick="SelectChangeAreaEvent(event)" id="${index}">
+        <img src=${ChangeSelectItem.Picture} alt="" class="HotRestaurantAreaPicture" onclick="SelectChangeAreaEvent(event)" id="${index}">
+        <div class="HotRestaurantTitle" onclick="SelectChangeAreaEvent(event)" id="${index}">${ChangeSelectItem.Title}</div>
+        <div class="HotRestaurantlocation" onclick="SelectChangeAreaEvent(event)" id="${index}">
+            <img src="image/location.png" alt="" onclick="SelectChangeAreaEvent(event)" id="${index}"><p onclick="SelectChangeAreaEvent(event)" id="${index}">${ChangeSelectItem.Location}</p>
+        </div>
+    </div>`
+}
+
+function LeftselectChangePage(){
+    if(selectChangePage/20>0){
+        selectChangePage-=20;
+        showSelectChangeArea(ScenicSpotCityPage)
+    }
+}
+
+function RightselectChangePage(){
+    if(selectChangePage/20<selectChangeMaxPage){
+        selectChangePage+=20;
+        showSelectChangeArea(selectChangePage)
+    }
+}
+
+function SelectChangeAreaEvent(e){
+    /** 首頁熱門活動資料的index */
+    const SelectChangeAreaIndex = e.srcElement.id
+    
+    /** 編輯文字敘述排版字串 */
+    let EditString =''
+    
+    //如果沒有說明，就不幫說明文字換行
+    if(ChangeSelect[SelectChangeAreaIndex].Description!==undefined)
+    for(index=0;index<ChangeSelect[SelectChangeAreaIndex].Description.length;index++){
+        const word=ChangeSelect[SelectChangeAreaIndex].Description[index]
+
+        EditString+=word
+        if(index%28===27) EditString+='<br>'
+    }
+
+
+    //圖片innerHTML
+    document.getElementById('dialogPictureArea').innerHTML=`
+        <img src=${ChangeSelect[SelectChangeAreaIndex].Picture} alt="" class="dialogPictureArea">
+    `
+    //標題innerHTML
+    document.getElementById('dialogTittle').innerHTML=`
+        <p>${ChangeSelect[SelectChangeAreaIndex].Title}</p>
+    `
+    //文字敘述innerHTML
+    document.getElementById('dialogDetail').innerHTML=`
+        <p>${EditString}</p>
+    `
+
+    document.getElementById('showDialog').showModal();
 }
 //#endregion
 
@@ -473,10 +643,12 @@ function selectFun(selectItem){
     //當特色選擇改變時
     if(selectItem==='selectUnit'){
         selectUnitValue = strUser
+        showselectChange()
     } 
     //當城市選擇改變時
     if(selectItem==='selectCity'){
         selectCityValue = strUser
+        showselectChange()
     } 
 }
 
