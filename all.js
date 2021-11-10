@@ -66,7 +66,7 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity').then(
                         Phone:HotRestaurant.Phone,
                         OpenTime:HotRestaurant.OpenTime,
                         money:HotRestaurant.money||'免費'
-                    }
+                    } 
                     HomePageHotRestaurant.push(Obj);
                 })
                 
@@ -154,6 +154,8 @@ function init(pageString) {
         BuildSelectCity()
         //刷新 查詢欄位內 細節的下拉選單  
         reflashSelectUnit(selectUnitList)
+        //渲染熱門餐飲區塊
+        showHotRestaurantArea();
     }
     //製作 景點交通 頁面
     else{
