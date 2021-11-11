@@ -774,7 +774,14 @@ function HotActionAreaButton(e){
 
 function showNewHotActionArea(e){
     //將全域變數還原初始化
-    resetAreaVariable()
+    /** HTML每個區塊id組成的array */
+    const AreaArr=['HotCityArea','HotActionArea','HotCityArea2','HotRestaurantArea','srooyArea']
+
+    selectUnitValue='0';
+    selectCityValue='0';
+    AreaArr.forEach(item=>{
+        document.getElementById(item).innerHTML=''
+    })
     /** 查詢字串 */
     let QueryString=`
     https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/${e.srcElement.id}
@@ -803,7 +810,6 @@ function showNewHotActionArea(e){
                 
             })
             console.log('response熱門景點>>>',ScenicSpotCity.length)
-            showQueryArea('View')
             showNewHotCityArea(ScenicSpotCityPage)
             
 
