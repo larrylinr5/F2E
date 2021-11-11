@@ -14,7 +14,7 @@ let ScenicSpotCity =[]
 let ScenicSpotCityPage = 0
 /** 熱門景點(城市)最大頁面 */
 let ScenicSpotCityMaxPage = 0
-/** 頁面 0=>台灣景點 1=>美食住宿 2=>交通 */
+/** 頁面 0=>台灣景點; 1=>美食住宿; 2=>交通; */
 let PageIndex=0
 /** 下拉選單查詢後資料存放區 */
 let ChangeSelect=[]
@@ -134,6 +134,7 @@ function init(pageString) {
 
     //製作 台灣景點 頁面
     if(pageString==='View'){
+        PageIndex=0
         const selectUnitList = [
             {
                 name:'類別',
@@ -161,6 +162,7 @@ function init(pageString) {
     }
     //製作 美食住宿 頁面
     else if(pageString==='Stay'){
+        PageIndex=1
         const selectUnitList = [
             {
                 name:'類別',
@@ -187,7 +189,7 @@ function init(pageString) {
     }
     //製作 景點交通 頁面
     else{
-
+        PageIndex=3
     }
 
     
@@ -292,8 +294,8 @@ function showselectChange(){
             QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Hotel'
             break;
         default :
-            if(PageIndex ==='0') QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot'
-            if(PageIndex ==='1') QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant'
+            if(PageIndex ===0) QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot'
+            if(PageIndex ===1) QueryString='https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant'
     }
     if(selectCityValue!=='0'){
         QueryString+='/'+selectCityValue
