@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣旅遊景點導-交通頁面</title>
+    <!-- #region載入CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- #region標題欄 -->
+    <div class="container">
+        <div class="header">
+            <div class="headerLeft">
+                <div>
+                    <a href="index.html"><img src="image/Group 4 (1) 2.png" alt="首頁"></a>
+                </div>
+            </div>
+            <div class="headerRight">
+                <div onclick="choosePage(event)">
+                    <a href="index.html" class="headerRightView"><img src="image/Frame 41.png" alt="台灣景點">
+                        台灣景點</a>
+                    <a href="index.html" class="headerRightStay"><img src="image/Frame 42.png" alt="美食住宿">
+                        美食住宿</a>
+                    <a href="traffic.html" class="headerRightTraffic"><img src="image/Frame 43.png" alt="景點交通"> 景點交通</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region 查詢區塊 -->
+    <div class="container">
+        <div class="queryAreaRowDetail" style="margin-top: 35px;">
+            <div>
+                <select id="selectCity"></select>
+            </div>
+            <div>
+                <select id="selectRoad" onchange="sowView()">
+                    <option value="0">選擇路線</option>
+                    <option value="1">還沒實裝功能1</option>
+                    <option value="2">還沒實裝功能2</option>
+                </select>
+            </div>
+            <div>
+                <img src="image/QueryBtn.png" alt="關鍵字查詢按鈕" onclick="sowView()">
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region sorry區塊 -->
+    <div id="srooyArea" class="container" style="margin-top: 35px;"></div>
+    <!-- #endregion -->
+    
+    <!-- #region footer -->
+    <div class="container">
+        <p class="footer">
+            Taiwan Tourguide  © Code: Michael  /  Design: KT
+        </p>
+    </div>
+    <!-- #endregion -->
+
+    <script src="trafficjs.js"></script>
+</body>
+</html>

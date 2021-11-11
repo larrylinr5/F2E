@@ -110,7 +110,7 @@ axios.get('https://ptx.transportdata.tw/MOTC/v2/Tourism/Hotel').then(
 /** 全域變數初始化 */
 function resetAreaVariable (){
     /** HTML每個區塊id組成的array */
-    const AreaArr=['queryArea','HotCityArea','HotActionArea','HotCityArea2','HotRestaurantArea']
+    const AreaArr=['queryArea','HotCityArea','HotActionArea','HotCityArea2','HotRestaurantArea','srooyArea']
 
     selectUnitValue='0';
     selectCityValue='0';
@@ -232,10 +232,10 @@ function showQueryArea(pageString){
                 <!-- 查詢區 -->
                 <div class="queryAreaRowDetail">
                     <div>
-                        <input value="搜尋關鍵字(功能還未實作)">
+                        <input placeholder="搜尋關鍵字(功能還未實作)">
                     </div>
                     <div>
-                        <img src="image/QueryBtn.png" alt="關鍵字查詢按鈕">
+                        <img src="image/QueryBtn.png" alt="關鍵字查詢按鈕" onclick="sowView()">
                     </div>
                 </div>
                 <!-- 下拉選單區 -->
@@ -247,7 +247,7 @@ function showQueryArea(pageString){
                         <select id="selectCity" onchange="selectFun('selectCity')"></select>
                     </div>
                     <div>
-                        <img src="image/LocalBtn.png" alt="定位按鈕">
+                        <img src="image/LocalBtn.png" alt="定位按鈕" onclick="sowView()">
                     </div>
                 </div>
             </div>
@@ -1068,7 +1068,18 @@ function closeDialog(){
 
 
 
-function aaa(){
-    alert('aaa')
+function sowView(){
+    //將全域變數還原初始化
+    resetAreaVariable()
+    ResaultString=`
+    <p style="font-size: 35px;">
+            抱歉！功能還沒製作 (上班太累了)<br>
+            請先不要使用(查詢功能按鈕)與(定位按鈕)<br>
+            下拉選單有onchange的功能、點選圖片也能開dialog<br>
+            很高興參與這次活動，主要志在練習Javascript、CSS、HTML<br>
+            有所缺失的地方還望包涵 (感恩)
+    </p>
+    <button onclick="init('View')">回到首頁</button>    
+    `
+    document.getElementById('srooyArea').innerHTML=ResaultString
 }
-
